@@ -1,0 +1,5 @@
+# Exclude CV — contains personal contact info
+LeeBall_SimplifiedResume2026.docx
+
+# macOS
+.DS_Store
