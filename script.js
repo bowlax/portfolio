@@ -59,7 +59,7 @@ revealEls.forEach(el => observer.observe(el));
    ============================================================ */
 const form = document.querySelector('.contact-form');
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const name    = form.name.value.trim();
@@ -76,9 +76,29 @@ form.addEventListener('submit', (e) => {
     return;
   }
 
-  // Replace this with your real form submission (Formspree, etc.)
-  showFormMsg("Message sent! I'll be in touch soon.", 'success');
-  form.reset();
+  const btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    });
+
+    if (res.ok) {
+      showFormMsg("Message sent! I'll be in touch soon.", 'success');
+      form.reset();
+    } else {
+      showFormMsg('Something went wrong. Please try emailing me directly.', 'error');
+    }
+  } catch {
+    showFormMsg('Could not send — please check your connection and try again.', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Send message';
+  }
 });
 
 function showFormMsg(text, type) {
