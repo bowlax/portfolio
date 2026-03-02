@@ -216,15 +216,15 @@ ul { list-style: none; }
   padding: var(--nav-h) 1rem 80px;
   position: relative;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37, 99, 235, 0.07) 0%, transparent 70%),
-    var(--bg);
+    linear-gradient(to bottom, rgba(10, 20, 40, 0.55) 0%, rgba(10, 20, 40, 0.7) 100%),
+    url('Copilot_20260227_113151.png') center / cover no-repeat;
 }
 
 .hero-eyebrow {
   font-size: 0.85rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.65);
   margin-bottom: 0.5rem;
 }
 
@@ -233,7 +233,7 @@ ul { list-style: none; }
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1;
-  background: linear-gradient(135deg, #0f172a 30%, #2563eb 100%);
+  background: linear-gradient(135deg, #ffffff 30%, #93c5fd 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -242,7 +242,7 @@ ul { list-style: none; }
 
 .hero-tagline {
   font-size: clamp(1rem, 2.5vw, 1.25rem);
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.7);
   max-width: 480px;
   margin: 0 auto 2.5rem;
 }
@@ -254,12 +254,21 @@ ul { list-style: none; }
   flex-wrap: wrap;
 }
 
+.hero .btn-ghost {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.hero .btn-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
 .hero-scroll-hint {
   position: absolute;
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
-  color: var(--text-faint);
+  color: rgba(255, 255, 255, 0.4);
   font-size: 1.2rem;
   animation: bob 2s ease-in-out infinite;
 }

@@ -1,5 +1,11 @@
 # Exclude CV — contains personal contact info
 LeeBall_SimplifiedResume2026.docx
 
+# Claude Code settings
+.claude/
+
+# Markdown source files
+posts/*.md
+
 # macOS
 .DS_Store
