@@ -876,6 +876,7 @@ a.post-row:hover .post-row-title {
 
 .post-nav-next {
   text-align: right;
+  grid-column: 2;
 }
 
 .post-nav-label {
