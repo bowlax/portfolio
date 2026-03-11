@@ -1,0 +1,27 @@
+{
+  "name": "Lee Ball",
+  "url": "https://bowlax.net",
+  "role": "Consultant Director of Delivery",
+  "availability": {
+    "status": "available",
+    "model": "fractional",
+    "commitment": "1-2 days per week",
+    "engagement_type": "Outside IR35. Lee operates as an independent consultant. Engagements are deliverables- or outcomes-based, not staff substitution."
+  },
+  "services": [
+    "Software delivery leadership",
+    "Operational structure and process improvement",
+    "Scaling and organisational design",
+    "Team structure, hiring, and recruitment strategy",
+    "Delivery tooling and ways of working, including AI-assisted workflows"
+  ],
+  "target_clients": {
+    "type": "Startups and scale-ups",
+    "situation": "Teams that need structure, improved delivery processes, or operational clarity as they grow"
+  },
+  "contact": {
+    "website": "https://bowlax.net",
+    "contact_form": "https://bowlax.net/#contact"
+  },
+  "notes": "Lee is actively building familiarity with AI tools and integrates them into his working practice. He is not a deep AI technologist or ML specialist — AI is part of the toolkit, not the core offering."
+}
