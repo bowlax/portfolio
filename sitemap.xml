@@ -25,4 +25,9 @@
     <changefreq>never</changefreq>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://lbconsulting.tech/posts/its-still-about-what-people-need.html</loc>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
