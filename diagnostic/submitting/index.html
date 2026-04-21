@@ -381,6 +381,8 @@
 
       if (!alreadySent) {
         document.getElementById('email-form').addEventListener('submit', handleEmailSubmit);
+      } else {
+        bindRestartLink();
       }
     }
 
@@ -445,8 +447,23 @@
           <div class="confirmation-icon">✓</div>
           <h2>Report on its way</h2>
           <p>Check your inbox — the full report should arrive in the next minute or two.</p>
+          <p style="margin-top:20px;">
+            <a href="#" id="restart-link" style="font-size:13px;color:var(--text-faint);text-decoration:none;border-bottom:1px solid var(--border);">Start a new diagnostic</a>
+          </p>
         </div>
       `;
+    }
+
+    function bindRestartLink() {
+      const link = document.getElementById('restart-link');
+      if (!link) return;
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        Object.keys(localStorage)
+          .filter(k => k.startsWith('dpd_'))
+          .forEach(k => localStorage.removeItem(k));
+        location.href = '/diagnostic/questions/';
+      });
     }
 
     function renderError(message) {
@@ -484,6 +501,7 @@
         // Replace email form with confirmation
         const emailSection = form.closest('.email-section');
         emailSection.outerHTML = renderConfirmation();
+        bindRestartLink();
       } catch (err) {
         btn.disabled = false;
         btn.textContent = 'Send report';
