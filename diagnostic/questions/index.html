@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Delivery Pattern Diagnostic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #ffffff;
+      --bg-alt:     #f8fafc;
+      --border:     #e2e8f0;
+      --accent:     #2563eb;
+      --accent-dim: #1d4ed8;
+      --accent-bg:  rgba(37,99,235,0.06);
+      --text:       #0f172a;
+      --text-muted: #64748b;
+      --text-faint: #94a3b8;
+      --font:       'Inter', 'Helvetica Neue', Arial, sans-serif;
+      --radius:     10px;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg-alt);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Progress bar ── */
+    .progress-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--border);
+      z-index: 200;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.4s ease;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 3px; left: 0; right: 0;
+      height: 57px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 100;
+    }
+    .nav-brand {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .nav-brand span { color: var(--accent); }
+    .nav-counter {
+      font-size: 13px;
+      color: var(--text-faint);
+      font-weight: 500;
+    }
+
+    /* ── Screen layout ── */
+    .screen {
+      min-height: 100vh;
+      padding: 80px 24px 120px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .screen-inner {
+      width: 100%;
+      max-width: 600px;
+      padding-top: 40px;
+    }
+
+    /* ── Question ── */
+    .question-number {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .question-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.35;
+      margin-bottom: 32px;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Options ── */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+      font-size: 15px;
+      color: var(--text);
+      text-align: left;
+      font-family: var(--font);
+      width: 100%;
+    }
+    .option:hover {
+      border-color: var(--accent);
+      background: var(--accent-bg);
+    }
+    .option.selected {
+      border-color: var(--accent);
+      background: var(--accent-bg);
+    }
+    .option:active { transform: scale(0.99); }
+    .option-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      transition: border-color 0.15s, background 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .option.selected .option-dot {
+      border-color: var(--accent);
+      background: var(--accent);
+    }
+    .option.selected .option-dot::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: white;
+    }
+
+    /* ── Open text ── */
+    .open-text-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: block;
+      letter-spacing: 0.02em;
+    }
+    .open-text-input {
+      width: 100%;
+      min-height: 120px;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-family: var(--font);
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      resize: vertical;
+      outline: none;
+      line-height: 1.6;
+      transition: border-color 0.15s;
+      margin-bottom: 24px;
+    }
+    .open-text-input:focus { border-color: var(--accent); }
+    .open-text-input::placeholder { color: var(--text-faint); }
+
+    /* ── Nav buttons ── */
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 11px 22px;
+      font-size: 14px;
+      font-family: var(--font);
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, transform 0.1s;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+    .btn-primary:hover { background: var(--accent-dim); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1.5px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--text-muted); color: var(--text); }
+
+    /* ── Error ── */
+    .field-error {
+      font-size: 13px;
+      color: #dc2626;
+      margin-top: -20px;
+      margin-bottom: 20px;
+    }
+
+    /* ── Submitting overlay ── */
+    .submitting-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(248,250,252,0.92);
+      backdrop-filter: blur(4px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+    }
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .submitting-overlay p {
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 500px) {
+      .question-text { font-size: 19px; }
+      .screen-inner { padding-top: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress" style="width:0%"></div>
+  </div>
+
+  <nav>
+    <a class="nav-brand" href="/diagnostic">The Delivery Pattern <span>Diagnostic</span></a>
+    <span class="nav-counter" id="counter">1 of 23</span>
+  </nav>
+
+  <div id="screen-container"></div>
+
+  <script>
+    const API_BASE = '';
+
+    // ── Question definitions ──────────────────────────────────────────────────
+
+    const QUESTIONS = [
+      {
+        id: 'Q0',
+        text: 'Where is your company right now?',
+        options: [
+          "Pre-launch — we're still building toward a first paying customer",
+          "First customer — we're live with our anchor customer",
+          "Growing base — we have multiple customers and are scaling",
+          "Established — multi-customer, post-product-market-fit, scaling the business",
+        ],
+        hasNA: false,
+      },
+      {
+        id: 'Q1',
+        text: "When your team is deciding what to build next, how often is one specific customer's needs the deciding factor?",
+        options: ['Rarely', 'Sometimes', 'Often', 'Usually', 'Almost always'],
+        hasNA: true,
+      },
+      {
+        id: 'Q2',
+        text: "Roughly how much of engineering's time goes to work that isn't on the product roadmap?",
+        options: ['Almost none', 'A small share', 'A meaningful share', 'A large share', "I honestly don't know"],
+        hasNA: true,
+      },
+      {
+        id: 'Q3',
+        text: "When the team writes action items in a retro, how often are they actually closed out by the next retro?",
+        options: ['Almost always', 'Usually', 'Sometimes', 'Rarely', 'Almost never'],
+        hasNA: true,
+      },
+      {
+        id: 'Q4',
+        text: "How confident are you that your product could serve a new customer who is meaningfully different from your current anchor customer?",
+        options: [
+          'Very confident',
+          'Reasonably confident',
+          'Unsure',
+          'Doubtful',
+          "That's not really who we're building for right now",
+        ],
+        hasNA: true,
+      },
+      {
+        id: 'Q5',
+        text: "When commitments to customers or investors get made, how often has engineering done a detailed estimate first?",
+        options: ['Almost always', 'Usually', 'Sometimes', 'Rarely', 'Almost never'],
+        hasNA: true,
+      },
+      {
+        id: 'Q6',
+        text: "If you asked three different team members what the most important thing the team is working on is, how similar would their answers be?",
+        options: ['Very similar', 'Broadly similar', 'Overlapping but different', 'Quite different', 'Very different'],
+        hasNA: true,
+      },
+      {
+        id: 'Q7',
+        text: "When things go wrong in production, are the causes usually one-off, or do they cluster — several issues tracing back to the same underlying thing?",
+        options: [
+          'Mostly one-off',
+          'Some clustering',
+          'Mixed',
+          'Clustering more common',
+          'Almost always clustered',
+        ],
+        hasNA: true,
+      },
+      {
+        id: 'Q8',
+        text: "After a piece of work ships, how often does someone on the business side say 'that's not quite what I meant'?",
+        options: ['Rarely', 'Sometimes', 'Often', 'Usually', 'Almost always'],
+        hasNA: true,
+      },
+      {
+        id: 'Q9',
+        text: "Is there one person whose holiday would be a genuine risk event for the team?",
+        options: [
+          "No — we're fairly distributed",
+          "There is one, but it'd be manageable",
+          'Yes — noticeable impact',
+          'Yes — significant impact',
+          'Yes — it would stop key things cold',
+        ],
+        hasNA: true,
+      },
+      {
+        id: 'Q10',
+        text: "If product and engineering each listed their top five priorities for this quarter, how much would the two lists overlap?",
+        options: ['Almost entirely', 'Mostly', 'Somewhat', 'Partially', 'Very little'],
+        hasNA: true,
+      },
+      {
+        id: 'Q11',
+        text: "When delivery runs into unexpected complexity, what's the more common response — reopening the commitment, or finding ways to still hit it?",
+        options: [
+          'Commitment usually reopens',
+          'Often reopens',
+          'Roughly balanced',
+          'Usually defended',
+          'Reopening rarely happens',
+        ],
+        hasNA: true,
+      },
+      {
+        id: 'Q12',
+        text: "Do the same topics keep coming up meeting after meeting without resolution?",
+        options: ['Rarely', 'Sometimes', 'Often', 'Usually', 'Almost always'],
+        hasNA: false,
+      },
+      {
+        id: 'Q13',
+        text: "When a decision needs input from a leader who isn't always present, what typically happens?",
+        options: [
+          'It gets made cleanly by someone who holds the delegation',
+          'It gets made and generally holds when the leader returns',
+          'It gets made but often gets revisited when the leader returns',
+          'It tends to wait for the leader to be available',
+          'Decisions like this pile up',
+        ],
+        hasNA: true,
+      },
+      {
+        id: 'Q14',
+        text: "When someone on the team has an operational question, how often does the answer route back to one particular individual?",
+        options: [
+          'Rarely',
+          'Sometimes',
+          'Often',
+          'Usually',
+          "Almost always — it's usually the same person",
+        ],
+        hasNA: true,
+      },
+      {
+        id: 'Q15',
+        text: "How often does the team explicitly identify the assumptions a piece of work depends on, and decide which to validate before building?",
+        options: ['Routinely', 'Sometimes', 'Occasionally', 'Rarely', 'Not something we do'],
+        hasNA: true,
+      },
+      {
+        id: 'Q16',
+        text: "When business intent becomes engineering tickets, who owns that translation?",
+        options: [
+          'A specific person, deliberately assigned',
+          'Usually the product manager does it',
+          'Usually whoever has bandwidth',
+          "Nobody explicitly — it emerges from conversations",
+          "I'm not sure who does it",
+        ],
+        hasNA: true,
+      },
+      {
+        id: 'Q17',
+        text: "How often do status reports show anything other than green?",
+        options: [
+          'Regularly — amber and red are normal',
+          'Sometimes amber shows up',
+          'Amber is rare',
+          'Almost everything is green',
+          "I can't remember the last red",
+        ],
+        hasNA: true,
+      },
+      {
+        id: 'Q18',
+        text: "Where do you usually get the most honest read on how delivery is actually going?",
+        options: [
+          'The official status meeting',
+          'Mostly status, sometimes informal',
+          'Roughly half and half',
+          'Mostly informal — corridor conversations, DMs, coffee',
+          'Almost never from status — only from back channels',
+        ],
+        hasNA: false,
+      },
+      {
+        id: 'Q19',
+        text: "For the next product or feature going live, how complete is the plan for the first weeks after launch — runbook, support, rollback, comms?",
+        options: [
+          'Fully documented',
+          'Mostly there',
+          'Partial',
+          'Thin',
+          "We'll work it out when we get there",
+        ],
+        hasNA: true,
+      },
+      {
+        id: 'Q20',
+        text: "How often do engineers surface questions late in a build that suggest they didn't understand the underlying 'why'?",
+        options: ['Rarely', 'Sometimes', 'Often', 'Usually', 'Almost always'],
+        hasNA: true,
+      },
+      {
+        id: 'Q21',
+        text: "Once something is live, how clear is it who owns what between engineering, support and customer success?",
+        options: [
+          'Very clear',
+          'Mostly clear',
+          'Mixed',
+          'Unclear',
+          'Largely defined by who shouts loudest',
+        ],
+        hasNA: true,
+      },
+      {
+        id: 'Q22',
+        type: 'open_text',
+        text: "Anything else you'd like to add? (Optional)",
+        placeholder: "Free text — anything that feels relevant to your delivery situation right now. This feeds into the report.",
+      },
+    ];
+
+    const NA_OPTION = 'Not applicable or not sure';
+    const TOTAL = QUESTIONS.length;
+
+    // ── State ─────────────────────────────────────────────────────────────────
+
+    const STATE_KEY = 'dpd_session';
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STATE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch {}
+      return {
+        sessionId: crypto.randomUUID(),
+        currentIndex: 0,
+        responses: {},
+        openText: '',
+      };
+    }
+
+    function saveState(state) {
+      localStorage.setItem(STATE_KEY, JSON.stringify(state));
+    }
+
+    let state = loadState();
+
+    // ── Render ────────────────────────────────────────────────────────────────
+
+    function render() {
+      const q = QUESTIONS[state.currentIndex];
+      const progress = Math.round(((state.currentIndex) / TOTAL) * 100);
+
+      document.getElementById('progress').style.width = `${progress}%`;
+      document.getElementById('counter').textContent = `${state.currentIndex + 1} of ${TOTAL}`;
+
+      const container = document.getElementById('screen-container');
+      container.innerHTML = q.type === 'open_text' ? renderOpenText(q) : renderChoice(q);
+
+      // Attach handlers
+      if (q.type === 'open_text') {
+        document.getElementById('btn-next').addEventListener('click', handleOpenTextNext);
+        const prevBtn = document.getElementById('btn-back');
+        if (prevBtn) prevBtn.addEventListener('click', goBack);
+      } else {
+        const optEls = container.querySelectorAll('.option');
+        optEls.forEach(el => el.addEventListener('click', () => handleOptionClick(el, q)));
+        const prevBtn = document.getElementById('btn-back');
+        if (prevBtn) prevBtn.addEventListener('click', goBack);
+      }
+
+      // Restore saved answer if returning to a question
+      const saved = state.responses[q.id];
+      if (saved !== undefined && q.type !== 'open_text') {
+        const optEls = container.querySelectorAll('.option');
+        optEls.forEach(el => {
+          if (el.dataset.value === saved) el.classList.add('selected');
+        });
+      }
+    }
+
+    function renderChoice(q) {
+      const isFirst = state.currentIndex === 0;
+      const opts = [...q.options, ...(q.hasNA ? [NA_OPTION] : [])];
+
+      return `
+        <div class="screen">
+          <div class="screen-inner">
+            <p class="question-number">Question ${state.currentIndex + 1}</p>
+            <h2 class="question-text">${q.text}</h2>
+            <div class="options" id="options">
+              ${opts.map(o => `
+                <button class="option" data-value="${escHtml(o)}">
+                  <span class="option-dot"></span>
+                  ${escHtml(o)}
+                </button>
+              `).join('')}
+            </div>
+            <div class="nav-buttons">
+              ${!isFirst ? `<button class="btn btn-ghost" id="btn-back">← Back</button>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderOpenText(q) {
+      const saved = state.openText || '';
+      return `
+        <div class="screen">
+          <div class="screen-inner">
+            <p class="question-number">Almost there</p>
+            <h2 class="question-text">${q.text}</h2>
+            <textarea
+              class="open-text-input"
+              id="open-text"
+              placeholder="${q.placeholder}"
+              maxlength="2000"
+            >${escHtml(saved)}</textarea>
+            <div class="nav-buttons">
+              <button class="btn btn-ghost" id="btn-back">← Back</button>
+              <button class="btn btn-primary" id="btn-next">See your results →</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // ── Handlers ──────────────────────────────────────────────────────────────
+
+    async function handleOptionClick(el, q) {
+      // Update selection UI
+      document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+
+      const value = el.dataset.value;
+
+      // Persist locally
+      state.responses[q.id] = value;
+      saveState(state);
+
+      // Submit to API (fire-and-forget; resilient — we continue regardless)
+      submitAnswer(q.id, value);
+
+      // Brief pause for feedback, then advance
+      await delay(180);
+      advance();
+    }
+
+    async function handleOpenTextNext() {
+      const textarea = document.getElementById('open-text');
+      state.openText = textarea ? textarea.value.trim() : '';
+      state.responses['Q22'] = null;
+      saveState(state);
+      submitAll();
+    }
+
+    function goBack() {
+      if (state.currentIndex > 0) {
+        state.currentIndex--;
+        saveState(state);
+        render();
+      }
+    }
+
+    function advance() {
+      if (state.currentIndex < TOTAL - 1) {
+        state.currentIndex++;
+        saveState(state);
+        render();
+      }
+    }
+
+    async function submitAnswer(questionId, value) {
+      try {
+        await fetch(`${API_BASE}/api/answer`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            session_id: state.sessionId,
+            question_id: questionId,
+            response: value,
+          }),
+        });
+      } catch {
+        // Silent — state is in localStorage, can be re-submitted
+      }
+    }
+
+    async function submitAll() {
+      showSubmitting();
+      try {
+        // Submit the complete call — the Worker scores and generates the report
+        const res = await fetch(`${API_BASE}/api/complete`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            session_id: state.sessionId,
+            open_text: state.openText || null,
+          }),
+        });
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || `HTTP ${res.status}`);
+        }
+
+        const data = await res.json();
+
+        // Cache result so submitting page doesn't need to re-call /api/complete
+        localStorage.setItem(`dpd_result_${state.sessionId}`, JSON.stringify(data));
+
+        window.location.href = `/diagnostic/submitting/?session_id=${encodeURIComponent(state.sessionId)}`;
+      } catch (e) {
+        hideSubmitting();
+        showError(`Something went wrong: ${e.message}. Please try again.`);
+      }
+    }
+
+    // ── UI helpers ────────────────────────────────────────────────────────────
+
+    function showSubmitting() {
+      const overlay = document.createElement('div');
+      overlay.className = 'submitting-overlay';
+      overlay.id = 'submitting-overlay';
+      overlay.innerHTML = `
+        <div class="spinner"></div>
+        <p>Analysing your responses…</p>
+      `;
+      document.body.appendChild(overlay);
+    }
+
+    function hideSubmitting() {
+      const el = document.getElementById('submitting-overlay');
+      if (el) el.remove();
+    }
+
+    function showError(msg) {
+      const container = document.getElementById('screen-container');
+      const errEl = document.createElement('p');
+      errEl.className = 'field-error';
+      errEl.style.cssText = 'text-align:center;padding:16px 24px;font-size:14px;';
+      errEl.textContent = msg;
+      container.appendChild(errEl);
+    }
+
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function escHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // ── Init ──────────────────────────────────────────────────────────────────
+    render();
+  </script>
+</body>
+</html>

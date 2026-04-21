@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Diagnostic Results — The Delivery Pattern Diagnostic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #ffffff;
+      --bg-alt:     #f8fafc;
+      --border:     #e2e8f0;
+      --accent:     #2563eb;
+      --accent-dim: #1d4ed8;
+      --text:       #0f172a;
+      --text-muted: #64748b;
+      --text-faint: #94a3b8;
+      --font:       'Inter', 'Helvetica Neue', Arial, sans-serif;
+      --radius:     10px;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg-alt);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      z-index: 100;
+    }
+    .nav-brand {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .nav-brand span { color: var(--accent); }
+
+    /* ── Loading state ── */
+    .loading {
+      padding-top: 120px;
+      text-align: center;
+    }
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading p { font-size: 15px; color: var(--text-muted); }
+
+    /* ── Main layout ── */
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 96px 24px 80px;
+    }
+
+    /* ── Preview card ── */
+    .preview-card {
+      background: #0f172a;
+      border-radius: 16px;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 48px;
+    }
+    .preview-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 240px; height: 240px;
+      background: radial-gradient(circle, rgba(37,99,235,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .card-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+    .card-identifier {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 4px;
+      padding: 3px 8px;
+      margin-bottom: 20px;
+    }
+    .card-pattern-name {
+      font-size: 32px;
+      font-weight: 700;
+      color: #f8fafc;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .card-diagnosis {
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(248,250,252,0.65);
+      max-width: 480px;
+    }
+    .card-no-pattern .card-pattern-name {
+      font-size: 24px;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 36px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .card-site {
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.04em;
+    }
+    .card-stage {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ── Email capture ── */
+    .email-section {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .section-body {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .email-form {
+      display: flex;
+      gap: 12px;
+    }
+    .email-input {
+      flex: 1;
+      padding: 10px 14px;
+      font-size: 15px;
+      font-family: var(--font);
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .email-input:focus { border-color: var(--accent); }
+    .email-input::placeholder { color: var(--text-faint); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-family: var(--font);
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--accent-dim); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .form-msg {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .form-msg.success {
+      background: rgba(34,197,94,0.1);
+      color: #166534;
+      border: 1px solid rgba(34,197,94,0.2);
+    }
+    .form-msg.error {
+      background: rgba(239,68,68,0.08);
+      color: #991b1b;
+      border: 1px solid rgba(239,68,68,0.2);
+    }
+
+    /* ── Confirmation ── */
+    .confirmation {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center;
+    }
+    .confirmation-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(37,99,235,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 22px;
+    }
+    .confirmation h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .confirmation p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 500px) {
+      .preview-card { padding: 28px 24px; }
+      .card-pattern-name { font-size: 26px; }
+      .email-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="/diagnostic">The Delivery Pattern <span>Diagnostic</span></a>
+  </nav>
+
+  <main id="app">
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Generating your results…</p>
+    </div>
+  </main>
+
+  <script>
+    const API_BASE = '';  // same-origin via Cloudflare Worker route
+
+    const PATTERN_NAMES = {
+      FCC: 'First-Customer Capture',
+      DBD: 'Dual Backlog Drift',
+      SL:  'Scope Lock-In',
+      AC:  'Assumption Compounding',
+      MD:  'Mission Diffusion',
+      HM:  'Hero Mode',
+      TG:  'Translation Gap',
+      GD:  'Green Dashboard',
+      RC:  'Readiness Cliff',
+      RWR: 'Ritual Without Rhythm',
+    };
+
+    const PATTERN_NUMBERS = {
+      FCC: 1, DBD: 2, SL: 3, AC: 4, MD: 5,
+      HM: 6,  TG: 7,  GD: 8, RC: 9, RWR: 10,
+    };
+
+    const STAGE_LABELS = {
+      pre_launch:    'Pre-launch',
+      first_customer:'First customer',
+      growing_base:  'Growing base',
+      established:   'Established',
+    };
+
+    async function init() {
+      const params = new URLSearchParams(location.search);
+      const sessionId = params.get('session_id');
+
+      if (!sessionId) {
+        renderError('No session found. Please complete the diagnostic first.');
+        return;
+      }
+
+      // Try to load from localStorage first (avoids refetch on back-navigate)
+      const cached = localStorage.getItem(`dpd_result_${sessionId}`);
+      if (cached) {
+        renderResults(JSON.parse(cached), sessionId);
+        return;
+      }
+
+      // Complete the session via API
+      const storedData = localStorage.getItem('dpd_session');
+      if (!storedData) {
+        renderError('Session data not found. Please complete the diagnostic first.');
+        return;
+      }
+
+      const { responses, openText } = JSON.parse(storedData);
+
+      try {
+        const res = await fetch(`${API_BASE}/api/complete`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ session_id: sessionId, open_text: openText || null }),
+        });
+
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(data.error || `HTTP ${res.status}`);
+        }
+
+        const data = await res.json();
+        localStorage.setItem(`dpd_result_${sessionId}`, JSON.stringify(data));
+        renderResults(data, sessionId);
+      } catch (e) {
+        renderError(`Something went wrong: ${e.message}. Please try again or contact lee@lbconsulting.tech.`);
+      }
+    }
+
+    function renderResults(data, sessionId) {
+      const { scoring, report } = data;
+      const primary = scoring.primary_pattern;
+      const app = document.getElementById('app');
+
+      const patternName = primary ? PATTERN_NAMES[primary.pattern_id] : null;
+      const patternNum  = primary ? PATTERN_NUMBERS[primary.pattern_id] : null;
+      const diagnosis   = primary ? report.primary_pattern?.name_card?.one_sentence : null;
+      const stageLabel  = STAGE_LABELS[scoring.stage] || scoring.stage;
+
+      const alreadySent = localStorage.getItem(`dpd_sent_${sessionId}`);
+
+      app.innerHTML = `
+        ${renderPreviewCard(patternName, patternNum, diagnosis, stageLabel, scoring.no_pattern_detected)}
+        ${alreadySent ? renderConfirmation() : renderEmailCapture(sessionId)}
+      `;
+
+      if (!alreadySent) {
+        document.getElementById('email-form').addEventListener('submit', handleEmailSubmit);
+      }
+    }
+
+    function renderPreviewCard(patternName, patternNum, diagnosis, stageLabel, noPattern) {
+      if (noPattern || !patternName) {
+        return `
+          <div class="preview-card">
+            <p class="card-label">The Delivery Pattern Diagnostic</p>
+            <div class="card-no-pattern">
+              <p class="card-pattern-name">No pattern detected</p>
+              <p class="card-diagnosis">The diagnostic didn't see strong signal on any of the ten patterns. That's meaningful in itself.</p>
+            </div>
+            <div class="card-footer">
+              <span class="card-site">lbconsulting.tech</span>
+              <span class="card-stage">${stageLabel}</span>
+            </div>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="preview-card">
+          <p class="card-label">The Delivery Pattern Diagnostic</p>
+          <span class="card-identifier">Pattern ${patternNum} of 10</span>
+          <h1 class="card-pattern-name">${patternName}</h1>
+          <p class="card-diagnosis">${diagnosis || ''}</p>
+          <div class="card-footer">
+            <span class="card-site">lbconsulting.tech</span>
+            <span class="card-stage">${stageLabel}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderEmailCapture(sessionId) {
+      return `
+        <div class="email-section">
+          <p class="section-eyebrow">Your full report</p>
+          <h2 class="section-title">Get the full analysis</h2>
+          <p class="section-body">
+            Enter your email and I'll send the complete report — what the pattern looks like from the inside,
+            what typically happens if it goes unaddressed, and three concrete things worth doing this week.
+          </p>
+          <form class="email-form" id="email-form" data-session="${sessionId}">
+            <input
+              class="email-input"
+              type="email"
+              name="email"
+              placeholder="your@email.com"
+              autocomplete="email"
+              required
+            />
+            <button class="btn btn-primary" type="submit">Send report</button>
+          </form>
+        </div>
+      `;
+    }
+
+    function renderConfirmation() {
+      return `
+        <div class="confirmation">
+          <div class="confirmation-icon">✓</div>
+          <h2>Report on its way</h2>
+          <p>Check your inbox — the full report should arrive in the next minute or two.</p>
+        </div>
+      `;
+    }
+
+    function renderError(message) {
+      document.getElementById('app').innerHTML = `
+        <div style="text-align:center;padding-top:40px;">
+          <p style="font-size:15px;color:#64748b;">${message}</p>
+        </div>
+      `;
+    }
+
+    async function handleEmailSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const email = form.email.value.trim();
+      const sessionId = form.dataset.session;
+      const btn = form.querySelector('button');
+
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      try {
+        const res = await fetch(`${API_BASE}/api/send-report`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ session_id: sessionId, email }),
+        });
+
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(data.error || `HTTP ${res.status}`);
+        }
+
+        localStorage.setItem(`dpd_sent_${sessionId}`, '1');
+
+        // Replace email form with confirmation
+        const emailSection = form.closest('.email-section');
+        emailSection.outerHTML = renderConfirmation();
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Send report';
+
+        const existing = form.querySelector('.form-msg');
+        if (existing) existing.remove();
+
+        const msg = document.createElement('p');
+        msg.className = 'form-msg error';
+        msg.textContent = err.message.includes('already sent')
+          ? 'Report already sent — check your inbox.'
+          : 'Something went wrong. Please try again.';
+        form.appendChild(msg);
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
