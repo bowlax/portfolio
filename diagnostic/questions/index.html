@@ -519,6 +519,11 @@
 
     let state = loadState();
 
+    // If this session was already completed, go straight to the results page
+    if (localStorage.getItem(`dpd_result_${state.sessionId}`)) {
+      window.location.replace(`/diagnostic/submitting/?session_id=${encodeURIComponent(state.sessionId)}`);
+    }
+
     // ── Render ────────────────────────────────────────────────────────────────
 
     function render() {
