@@ -281,222 +281,10 @@
   <script>
     const API_BASE = '';
 
-    // ── Question definitions ──────────────────────────────────────────────────
-
-    const QUESTIONS = [
-      {
-        id: 'Q0',
-        text: 'Where is your company right now?',
-        options: [
-          "Pre-launch — we're still building toward a first paying customer",
-          "First customer — we're live with our anchor customer",
-          "Growing base — we have multiple customers and are scaling",
-          "Established — multi-customer, post-product-market-fit, scaling the business",
-        ],
-        hasNA: false,
-      },
-      {
-        id: 'Q1',
-        text: "When your team is deciding what to build next, how often is one specific customer's needs the deciding factor?",
-        options: ['Rarely', 'Sometimes', 'Often', 'Usually', 'Almost always'],
-        hasNA: true,
-      },
-      {
-        id: 'Q2',
-        text: "Roughly how much of engineering's time goes to work that isn't on the product roadmap?",
-        options: ['Almost none', 'A small share', 'A meaningful share', 'A large share', "I honestly don't know"],
-        hasNA: true,
-      },
-      {
-        id: 'Q3',
-        text: "When the team writes action items in a retro, how often are they actually closed out by the next retro?",
-        options: ['Almost always', 'Usually', 'Sometimes', 'Rarely', 'Almost never'],
-        hasNA: true,
-      },
-      {
-        id: 'Q4',
-        text: "How confident are you that your product could serve a new customer who is meaningfully different from your current anchor customer?",
-        options: [
-          'Very confident',
-          'Reasonably confident',
-          'Unsure',
-          'Doubtful',
-          "That's not really who we're building for right now",
-        ],
-        hasNA: true,
-      },
-      {
-        id: 'Q5',
-        text: "When commitments to customers or investors get made, how often has engineering done a detailed estimate first?",
-        options: ['Almost always', 'Usually', 'Sometimes', 'Rarely', 'Almost never'],
-        hasNA: true,
-      },
-      {
-        id: 'Q6',
-        text: "If you asked three different team members what the most important thing the team is working on is, how similar would their answers be?",
-        options: ['Very similar', 'Broadly similar', 'Overlapping but different', 'Quite different', 'Very different'],
-        hasNA: true,
-      },
-      {
-        id: 'Q7',
-        text: "When things go wrong in production, are the causes usually one-off, or do they cluster — several issues tracing back to the same underlying thing?",
-        options: [
-          'Mostly one-off',
-          'Some clustering',
-          'Mixed',
-          'Clustering more common',
-          'Almost always clustered',
-        ],
-        hasNA: true,
-      },
-      {
-        id: 'Q8',
-        text: "After a piece of work ships, how often does someone on the business side say 'that's not quite what I meant'?",
-        options: ['Rarely', 'Sometimes', 'Often', 'Usually', 'Almost always'],
-        hasNA: true,
-      },
-      {
-        id: 'Q9',
-        text: "Is there one person whose holiday would be a genuine risk event for the team?",
-        options: [
-          "No — we're fairly distributed",
-          "There is one, but it'd be manageable",
-          'Yes — noticeable impact',
-          'Yes — significant impact',
-          'Yes — it would stop key things cold',
-        ],
-        hasNA: true,
-      },
-      {
-        id: 'Q10',
-        text: "If product and engineering each listed their top five priorities for this quarter, how much would the two lists overlap?",
-        options: ['Almost entirely', 'Mostly', 'Somewhat', 'Partially', 'Very little'],
-        hasNA: true,
-      },
-      {
-        id: 'Q11',
-        text: "When delivery turns out to be more complex than expected, what usually happens — does the deadline move, or does the team find a way to hit it anyway?",
-        options: [
-          'Commitment usually reopens',
-          'Often reopens',
-          'Roughly balanced',
-          'Usually defended',
-          'Reopening rarely happens',
-        ],
-        hasNA: true,
-      },
-      {
-        id: 'Q12',
-        text: "Do the same topics keep coming up meeting after meeting without resolution?",
-        options: ['Rarely', 'Sometimes', 'Often', 'Usually', 'Almost always'],
-        hasNA: false,
-      },
-      {
-        id: 'Q13',
-        text: "When a decision needs input from a leader who isn't always present, what typically happens?",
-        options: [
-          'It gets made cleanly by someone who holds the delegation',
-          'It gets made and generally holds when the leader returns',
-          'It gets made but often gets revisited when the leader returns',
-          'It tends to wait for the leader to be available',
-          'Decisions like this pile up',
-        ],
-        hasNA: true,
-      },
-      {
-        id: 'Q14',
-        text: "When someone on the team has an operational question, how often does the answer route back to one particular individual?",
-        options: [
-          'Rarely',
-          'Sometimes',
-          'Often',
-          'Usually',
-          "Almost always — it's usually the same person",
-        ],
-        hasNA: true,
-      },
-      {
-        id: 'Q15',
-        text: "How often does the team explicitly identify the assumptions a piece of work depends on, and decide which to validate before building?",
-        options: ['Routinely', 'Sometimes', 'Occasionally', 'Rarely', 'Not something we do'],
-        hasNA: true,
-      },
-      {
-        id: 'Q16',
-        text: "When business intent becomes engineering tickets, who owns that translation?",
-        options: [
-          'A specific person, deliberately assigned',
-          'Usually the product manager does it',
-          'Usually whoever has bandwidth',
-          "Nobody explicitly — it emerges from conversations",
-          "I'm not sure who does it",
-        ],
-        hasNA: true,
-      },
-      {
-        id: 'Q17',
-        text: "How often do status reports show anything other than green?",
-        options: [
-          'Regularly — amber and red are normal',
-          'Sometimes amber shows up',
-          'Amber is rare',
-          'Almost everything is green',
-          "I can't remember the last red",
-        ],
-        hasNA: true,
-      },
-      {
-        id: 'Q18',
-        text: "Where do you usually get the most honest read on how delivery is actually going?",
-        options: [
-          'The official status meeting',
-          'Mostly status, sometimes informal',
-          'Roughly half and half',
-          'Mostly informal — corridor conversations, DMs, coffee',
-          'Almost never from status — only from back channels',
-        ],
-        hasNA: false,
-      },
-      {
-        id: 'Q19',
-        text: "For the next product or feature going live, how complete is the plan for the first weeks after launch — runbook, support, rollback, comms?",
-        options: [
-          'Fully documented',
-          'Mostly there',
-          'Partial',
-          'Thin',
-          "We'll work it out when we get there",
-        ],
-        hasNA: true,
-      },
-      {
-        id: 'Q20',
-        text: "How often do engineers surface questions late in a build that suggest they didn't understand the underlying 'why'?",
-        options: ['Rarely', 'Sometimes', 'Often', 'Usually', 'Almost always'],
-        hasNA: true,
-      },
-      {
-        id: 'Q21',
-        text: "Once something is live, how clear is it who owns what between engineering, support and customer success?",
-        options: [
-          'Very clear',
-          'Mostly clear',
-          'Mixed',
-          'Unclear',
-          'Largely defined by who shouts loudest',
-        ],
-        hasNA: true,
-      },
-      {
-        id: 'Q22',
-        type: 'open_text',
-        text: "Anything else you'd like to add? (Optional)",
-        placeholder: "Free text — anything that feels relevant to your delivery situation right now. This feeds into the report.",
-      },
-    ];
-
+    // ── Question definitions (loaded from /api/questions) ─────────────────────
+    let QUESTIONS = [];
     const NA_OPTION = 'Not applicable or not sure';
-    const TOTAL = QUESTIONS.length;
+    let TOTAL = 0;
 
     // ── State ─────────────────────────────────────────────────────────────────
 
@@ -520,11 +308,6 @@
     }
 
     let state = loadState();
-
-    // If this session was already completed, go straight to the results page
-    if (localStorage.getItem(`dpd_result_${state.sessionId}`)) {
-      window.location.replace(`/diagnostic/submitting/?session_id=${encodeURIComponent(state.sessionId)}`);
-    }
 
     // ── Render ────────────────────────────────────────────────────────────────
 
@@ -620,7 +403,7 @@
       state.responses[q.id] = value;
       saveState(state);
 
-      // Submit to API (fire-and-forget; resilient — we continue regardless)
+      // Submit to API (fire-and-forget; resilient - we continue regardless)
       submitAnswer(q.id, value);
 
       // Brief pause for feedback, then advance
@@ -664,14 +447,14 @@
           }),
         });
       } catch {
-        // Silent — state is in localStorage, can be re-submitted
+        // Silent - state is in localStorage, can be re-submitted
       }
     }
 
     async function submitAll() {
       showSubmitting();
       try {
-        // Submit the complete call — the Worker scores and generates the report
+        // Submit the complete call - the Worker scores and generates the report
         const res = await fetch(`${API_BASE}/api/complete`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -739,7 +522,26 @@
     }
 
     // ── Init ──────────────────────────────────────────────────────────────────
-    render();
+
+    async function init() {
+      if (localStorage.getItem(`dpd_result_${state.sessionId}`)) {
+        window.location.replace(`/diagnostic/submitting/?session_id=${encodeURIComponent(state.sessionId)}`);
+        return;
+      }
+      try {
+        const res = await fetch(`${API_BASE}/api/questions`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        QUESTIONS = await res.json();
+        TOTAL = QUESTIONS.length;
+      } catch (e) {
+        document.getElementById('screen-container').innerHTML =
+          `<p style="text-align:center;padding:40px;font-size:14px;color:#64748b;">Failed to load questions. Please refresh the page.</p>`;
+        return;
+      }
+      render();
+    }
+
+    init();
   </script>
 </body>
 </html>
