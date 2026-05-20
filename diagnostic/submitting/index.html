@@ -422,11 +422,11 @@
     function renderEmailCapture(sessionId) {
       return `
         <div class="email-section">
-          <p class="section-eyebrow">Your full report</p>
-          <h2 class="section-title">Get the full analysis</h2>
+          <p class="section-eyebrow">YOUR FULL REPORT</p>
+          <h2 class="section-title">What this pattern means for you</h2>
           <p class="section-body">
-            Enter your email and I'll send the complete report — what the pattern looks like from the inside,
-            what typically happens if it goes unaddressed, and three concrete things worth doing this week.
+            The preview shows you what it is. The report tells you what it means - how it typically plays out,
+            what it looks like from inside your organisation, and three concrete things worth doing this week.
           </p>
           <form class="email-form" id="email-form" data-session="${sessionId}">
             <input
@@ -437,8 +437,9 @@
               autocomplete="email"
               required
             />
-            <button class="btn btn-primary" type="submit">Send report</button>
+            <button class="btn btn-primary" type="submit">Send me the report</button>
           </form>
+          <p style="margin-top:12px;font-size:13px;color:var(--text-faint);">One email, no spam. I may follow up once if it seems useful.</p>
         </div>
       `;
     }
@@ -506,7 +507,7 @@
         bindRestartLink();
       } catch (err) {
         btn.disabled = false;
-        btn.textContent = 'Send report';
+        btn.textContent = 'Send me the report';
 
         const existing = form.querySelector('.form-msg');
         if (existing) existing.remove();
