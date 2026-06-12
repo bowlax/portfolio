@@ -30,7 +30,7 @@ const revealEls = document.querySelectorAll(
 revealEls.forEach((el, i) => {
   el.classList.add('reveal');
   // Stagger cards & timeline items within their group
-  const parent = el.closest('.posts-grid, .timeline');
+  const parent = el.closest('.posts-carousel-track, .timeline');
   if (parent) {
     const siblings = Array.from(parent.children);
     const idx = siblings.indexOf(el);

@@ -409,14 +409,46 @@ ul { list-style: none; }
 /* ============================================================
    WRITING
    ============================================================ */
-.posts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.25rem;
+#writing .section-title {
+  margin-bottom: 0.5rem;
+}
+
+.posts-carousel {
+  --carousel-gutter: max(5vw, calc((100vw - min(90vw, var(--max-w))) / 2));
   margin-top: 0.5rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--carousel-gutter);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.posts-carousel::-webkit-scrollbar {
+  height: 6px;
+}
+
+.posts-carousel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.posts-carousel::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+.posts-carousel-track {
+  display: flex;
+  gap: 1.25rem;
+  width: max-content;
+  padding-inline: var(--carousel-gutter);
+  padding-bottom: 0.75rem;
 }
 
 .post-card {
+  flex: 0 0 min(300px, calc(100vw - 2 * var(--carousel-gutter) - 1.25rem));
+  scroll-snap-align: start;
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -643,7 +675,6 @@ ul { list-style: none; }
 
 @media (max-width: 480px) {
   .hero-name { font-size: clamp(3rem, 18vw, 5rem); }
-  .posts-grid { grid-template-columns: 1fr; }
 }
 
 /* ============================================================
