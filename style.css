@@ -414,7 +414,10 @@ ul { list-style: none; }
 }
 
 .posts-carousel {
+  container-type: inline-size;
+  container-name: posts-carousel;
   margin-top: 0.5rem;
+  width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
@@ -443,21 +446,24 @@ ul { list-style: none; }
   align-items: stretch;
   gap: 1.25rem;
   width: max-content;
-  padding-inline: 5vw;
   padding-bottom: 0.75rem;
 }
 
-@media (min-width: 1223px) {
-  .posts-carousel-track {
-    padding-inline: calc((100vw - var(--max-w)) / 2);
+.posts-carousel-track .post-card {
+  flex: 0 0 calc((100cqw - 3.75rem) / 4);
+  scroll-snap-align: start;
+}
+
+@container posts-carousel (max-width: 768px) {
+  .posts-carousel-track .post-card {
+    flex-basis: calc((100cqw - 1.25rem) / 2);
   }
 }
 
-.posts-carousel-track .post-card {
-  flex: 0 0 300px;
-  width: 300px;
-  max-width: calc(100vw - 10vw);
-  scroll-snap-align: start;
+@container posts-carousel (max-width: 480px) {
+  .posts-carousel-track .post-card {
+    flex-basis: 100cqw;
+  }
 }
 
 .post-card {
