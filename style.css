@@ -866,6 +866,19 @@ a.post-row:hover .post-row-title {
   margin-bottom: 0;
 }
 
+.post-body ul.post-list-plain {
+  margin: 0 0 1.5rem;
+  padding-left: 1.25rem;
+}
+
+.post-body ul.post-list-plain li {
+  margin-bottom: 0.75rem;
+}
+
+.post-body ul.post-list-plain li:last-child {
+  margin-bottom: 0;
+}
+
 .post-lead {
   font-size: 1.15rem;
   color: var(--text);
