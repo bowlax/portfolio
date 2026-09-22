@@ -979,3 +979,38 @@ a.post-row:hover .post-row-title {
 .reveal-delay-1 { transition-delay: 0.1s; }
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
+
+/* Reference list at the foot of a post */
+.post-body ol.post-refs {
+  margin: 0 0 1.5rem;
+  padding-left: 1.25rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.post-body ol.post-refs li {
+  margin-bottom: 0.5rem;
+}
+
+.post-body ol.post-refs li:last-child {
+  margin-bottom: 0;
+}
+
+/* Bulleted list inside a post (the site default hides markers) */
+.post-body ul.post-list-bulleted {
+  list-style: disc;
+  margin: 0 0 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.post-body ul.post-list-bulleted li {
+  margin-bottom: 0.75rem;
+}
+
+.post-body ul.post-list-bulleted li:last-child {
+  margin-bottom: 0;
+}
+
+.post-body ol.post-refs li {
+  overflow-wrap: anywhere;
+}
