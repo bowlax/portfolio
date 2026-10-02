@@ -9,3 +9,6 @@ posts/*.md
 
 # macOS
 .DS_Store
+
+# Working drafts and scratch files for posts
+posts/_drafts/
