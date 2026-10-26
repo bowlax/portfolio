@@ -1,0 +1,25 @@
+# Lee Ball
+
+I help senior leaders get visibility and confidence in their delivery – embedding inside scaling software companies to close the distance between their vision and what their teams are actually building. Essays and perspectives from Lee Ball on delivery leadership, AI in the workplace, and building teams across borders.
+
+## Writing
+
+- [Forward deployment: is it right for you?](https://lbconsulting.tech/posts/forward-deployment-is-it-right-for-you.html): Forward deployed engineers are arriving in enterprise accounts. What the vendor economics mean for the buyer, and three questions to ask before saying yes.
+- [AI speeds up the keyboard, not the queue](https://lbconsulting.tech/posts/ai-speeds-up-the-keyboard-not-the-queue.html): AI makes the individual faster, but the review, test and approval queue after the keyboard hasn't changed. Where the speed goes.
+- [Do we still know what an engagement costs?](https://lbconsulting.tech/posts/do-we-still-know-what-an-engagement-costs.html): Andy and Betty both book forty hours and cost different amounts. What delivery costs has moved off the timesheet.
+- [Are billable hours losing meaning?](https://lbconsulting.tech/posts/are-billable-hours-losing-meaning.html): Professional Services has always been selling availability as effort. AI makes effort irrelevant to the buyer, so what happens to the timesheet?
+- [Everyone Was Being Reasonable About Not Addressing the Problem](https://lbconsulting.tech/posts/everyone-was-being-reasonable.html): When leadership means doing the boring analysis nobody else has a reason to do.
+- [Everyone's Own Version of Everything](https://lbconsulting.tech/posts/everyones-own-version-of-everything.html): On hyper-personalisation, and what we trade away for it.
+- [What I Learned From My First Fractional Engagement](https://lbconsulting.tech/posts/what-i-learned-from-my-first-fractional-engagement.html): The dynamics don't change. The matrix just hides them.
+- [Empathy is Not a Blind Spot](https://lbconsulting.tech/posts/empathy-is-not-a-blind-spot.html): On working with what's there, rather than what you'd design from scratch.
+- [Translating English into English](https://lbconsulting.tech/posts/translating-english-into-english.html): Never complain, never explain (over email)
+- [Escalation Has a Reputation Problem](https://lbconsulting.tech/posts/escalation-has-a-reputation-problem.html): An escalation, handled well, should never be anything to fear.
+- [It's Still About What People Need](https://lbconsulting.tech/posts/its-still-about-what-people-need.html): Two conversations about where AI is headed left me uncertain about the answers — but clearer about what still matters.
+- [AI in Delivery: I Didn't Really Build This Website](https://lbconsulting.tech/posts/ai-in-delivery-website.html): The most honest thing I can say about this website is that I didn't really build it. And yet, here it is.
+- [Twice in Singapore](https://lbconsulting.tech/posts/twice-in-singapore.html): The same city, similar briefs, very different experiences — and the differences had less to do with Singapore than with me.
+- [AI in Delivery: The Agents That Gave Me My Time Back](https://lbconsulting.tech/posts/ai-in-delivery-agents.html): How two simple Copilot agents changed the way I work — and why the hardest part wasn't the technology.
+
+## Feed and sitemap
+
+- [/feed.xml](/feed.xml)
+- [/sitemap.xml](/sitemap.xml)

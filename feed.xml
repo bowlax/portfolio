@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Lee Ball: Writing</title>
+  <id>https://lbconsulting.tech</id>
+  <updated>2026-10-06T00:00:00Z</updated>
+  <author>
+    <name>Lee Ball</name>
+  </author>
+  <link rel="alternate" type="text/html" href="https://lbconsulting.tech"/>
+  <link rel="self" type="application/atom+xml" href="https://lbconsulting.tech/feed.xml"/>
+  <entry>
+    <title>Forward deployment: is it right for you?</title>
+    <link rel="alternate" type="text/html" href="https://lbconsulting.tech/posts/forward-deployment-is-it-right-for-you.html"/>
+    <id>https://lbconsulting.tech/posts/forward-deployment-is-it-right-for-you.html</id>
+    <updated>2026-10-06T00:00:00Z</updated>
+    <summary>Forward deployed engineers are arriving in enterprise accounts. What the vendor economics mean for the buyer, and three questions to ask before saying yes.</summary>
+  </entry>
+  <entry>
+    <title>AI speeds up the keyboard, not the queue</title>
+    <link rel="alternate" type="text/html" href="https://lbconsulting.tech/posts/ai-speeds-up-the-keyboard-not-the-queue.html"/>
+    <id>https://lbconsulting.tech/posts/ai-speeds-up-the-keyboard-not-the-queue.html</id>
+    <updated>2026-10-02T00:00:00Z</updated>
+    <summary>AI makes the individual faster, but the review, test and approval queue after the keyboard hasn't changed. Where the speed goes.</summary>
+  </entry>
+  <entry>
+    <title>Do we still know what an engagement costs?</title>
+    <link rel="alternate" type="text/html" href="https://lbconsulting.tech/posts/do-we-still-know-what-an-engagement-costs.html"/>
+    <id>https://lbconsulting.tech/posts/do-we-still-know-what-an-engagement-costs.html</id>
+    <updated>2026-09-22T00:00:00Z</updated>
+    <summary>Andy and Betty both book forty hours and cost different amounts. What delivery costs has moved off the timesheet.</summary>
+  </entry>
+  <entry>
+    <title>Are billable hours losing meaning?</title>
+    <link rel="alternate" type="text/html" href="https://lbconsulting.tech/posts/are-billable-hours-losing-meaning.html"/>
+    <id>https://lbconsulting.tech/posts/are-billable-hours-losing-meaning.html</id>
+    <updated>2026-09-11T00:00:00Z</updated>
+    <summary>Professional Services has always been selling availability as effort. AI makes effort irrelevant to the buyer, so what happens to the timesheet?</summary>
+  </entry>
+  <entry>
+    <title>Everyone Was Being Reasonable About Not Addressing the Problem</title>
+    <link rel="alternate" type="text/html" href="https://lbconsulting.tech/posts/everyone-was-being-reasonable.html"/>
+    <id>https://lbconsulting.tech/posts/everyone-was-being-reasonable.html</id>
+    <updated>2026-08-20T00:00:00Z</updated>
+    <summary>When leadership means doing the boring analysis nobody else has a reason to do.</summary>
+  </entry>
+  <entry>
+    <title>Everyone's Own Version of Everything</title>
+    <link rel="alternate" type="text/html" href="https://lbconsulting.tech/posts/everyones-own-version-of-everything.html"/>
+    <id>https://lbconsulting.tech/posts/everyones-own-version-of-everything.html</id>
+    <updated>2026-07-09T00:00:00Z</updated>
+    <summary>On hyper-personalisation, and what we trade away for it.</summary>
+  </entry>
+  <entry>
+    <title>What I Learned From My First Fractional Engagement</title>
+    <link rel="alternate" type="text/html" href="https://lbconsulting.tech/posts/what-i-learned-from-my-first-fractional-engagement.html"/>
+    <id>https://lbconsulting.tech/posts/what-i-learned-from-my-first-fractional-engagement.html</id>
+    <updated>2026-06-22T00:00:00Z</updated>
+    <summary>The dynamics don't change. The matrix just hides them.</summary>
+  </entry>
+  <entry>
+    <title>Empathy is Not a Blind Spot</title>
+    <link rel="alternate" type="text/html" href="https://lbconsulting.tech/posts/empathy-is-not-a-blind-spot.html"/>
+    <id>https://lbconsulting.tech/posts/empathy-is-not-a-blind-spot.html</id>
+    <updated>2026-06-12T00:00:00Z</updated>
+    <summary>On working with what's there, rather than what you'd design from scratch.</summary>
+  </entry>
+  <entry>
+    <title>Translating English into English</title>
+    <link rel="alternate" type="text/html" href="https://lbconsulting.tech/posts/translating-english-into-english.html"/>
+    <id>https://lbconsulting.tech/posts/translating-english-into-english.html</id>
+    <updated>2026-05-25T00:00:00Z</updated>
+    <summary>Never complain, never explain (over email)</summary>
+  </entry>
+  <entry>
+    <title>Escalation Has a Reputation Problem</title>
+    <link rel="alternate" type="text/html" href="https://lbconsulting.tech/posts/escalation-has-a-reputation-problem.html"/>
+    <id>https://lbconsulting.tech/posts/escalation-has-a-reputation-problem.html</id>
+    <updated>2026-04-27T00:00:00Z</updated>
+    <summary>An escalation, handled well, should never be anything to fear.</summary>
+  </entry>
+  <entry>
+    <title>It's Still About What People Need</title>
+    <link rel="alternate" type="text/html" href="https://lbconsulting.tech/posts/its-still-about-what-people-need.html"/>
+    <id>https://lbconsulting.tech/posts/its-still-about-what-people-need.html</id>
+    <updated>2026-04-14T00:00:00Z</updated>
+    <summary>Two conversations about where AI is headed left me uncertain about the answers — but clearer about what still matters.</summary>
+  </entry>
+  <entry>
+    <title>AI in Delivery: I Didn't Really Build This Website</title>
+    <link rel="alternate" type="text/html" href="https://lbconsulting.tech/posts/ai-in-delivery-website.html"/>
+    <id>https://lbconsulting.tech/posts/ai-in-delivery-website.html</id>
+    <updated>2026-03-03T00:00:00Z</updated>
+    <summary>The most honest thing I can say about this website is that I didn't really build it. And yet, here it is.</summary>
+  </entry>
+  <entry>
+    <title>Twice in Singapore</title>
+    <link rel="alternate" type="text/html" href="https://lbconsulting.tech/posts/twice-in-singapore.html"/>
+    <id>https://lbconsulting.tech/posts/twice-in-singapore.html</id>
+    <updated>2026-02-27T00:00:00Z</updated>
+    <summary>The same city, similar briefs, very different experiences — and the differences had less to do with Singapore than with me.</summary>
+  </entry>
+  <entry>
+    <title>AI in Delivery: The Agents That Gave Me My Time Back</title>
+    <link rel="alternate" type="text/html" href="https://lbconsulting.tech/posts/ai-in-delivery-agents.html"/>
+    <id>https://lbconsulting.tech/posts/ai-in-delivery-agents.html</id>
+    <updated>2026-02-25T00:00:00Z</updated>
+    <summary>How two simple Copilot agents changed the way I work — and why the hardest part wasn't the technology.</summary>
+  </entry>
+</feed>
